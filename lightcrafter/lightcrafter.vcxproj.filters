@@ -36,13 +36,7 @@
     <ClCompile Include="dlpc\dlpc350_api.cpp">
       <Filter>ソース ファイル\dlpc</Filter>
     </ClCompile>
-    <ClCompile Include="dlpc\dlpc350_BMPParser.cpp">
-      <Filter>ソース ファイル\dlpc</Filter>
-    </ClCompile>
     <ClCompile Include="dlpc\dlpc350_common.cpp">
-      <Filter>ソース ファイル\dlpc</Filter>
-    </ClCompile>
-    <ClCompile Include="dlpc\dlpc350_firmware.cpp">
       <Filter>ソース ファイル\dlpc</Filter>
     </ClCompile>
     <ClCompile Include="dlpc\dlpc350_usb.cpp">
@@ -59,25 +53,13 @@
     <ClInclude Include="dlpc\dlpc350_api.h">
       <Filter>ヘッダー ファイル\dlpc</Filter>
     </ClInclude>
-    <ClInclude Include="dlpc\dlpc350_BMPParser.h">
-      <Filter>ヘッダー ファイル\dlpc</Filter>
-    </ClInclude>
     <ClInclude Include="dlpc\dlpc350_common.h">
       <Filter>ヘッダー ファイル\dlpc</Filter>
     </ClInclude>
     <ClInclude Include="dlpc\dlpc350_error.h">
       <Filter>ヘッダー ファイル\dlpc</Filter>
     </ClInclude>
-    <ClInclude Include="dlpc\dlpc350_firmware.h">
-      <Filter>ヘッダー ファイル\dlpc</Filter>
-    </ClInclude>
-    <ClInclude Include="dlpc\dlpc350_flashDevice.h">
-      <Filter>ヘッダー ファイル\dlpc</Filter>
-    </ClInclude>
     <ClInclude Include="dlpc\dlpc350_usb.h">
-      <Filter>ヘッダー ファイル\dlpc</Filter>
-    </ClInclude>
-    <ClInclude Include="dlpc\Helper.h">
       <Filter>ヘッダー ファイル\dlpc</Filter>
     </ClInclude>
     <ClInclude Include="hidapi\hidapi.h">
