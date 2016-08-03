@@ -1,4 +1,4 @@
-/*
+﻿/*
  * dlpc350_api.h
  *
  * This module provides C callable APIs for each of the command supported

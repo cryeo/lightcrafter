@@ -1,4 +1,4 @@
-#include "Error.h"
+﻿#include "Error.h"
 
 namespace LightCrafter {
 	namespace Error {

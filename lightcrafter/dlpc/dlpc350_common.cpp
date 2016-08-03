@@ -1,4 +1,4 @@
-/*
+﻿/*
  * dlpc350_common.cpp
  *
  * This module provides the common defines used by all the modules.

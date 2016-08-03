@@ -1,4 +1,4 @@
-/*
+﻿/*
  * dlpc350_flashDevice.h
  *
  * This module provides flash related definitions.

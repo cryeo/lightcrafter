@@ -1,4 +1,4 @@
-/*
+﻿/*
  * dlpc350_usb.cpp
  *
  * This module has the wrapper functions to access USB driver functions.

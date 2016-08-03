@@ -1,4 +1,4 @@
-/*
+﻿/*
  * dlpc350_error.h
  *
  * This module defines the error handling related definitions

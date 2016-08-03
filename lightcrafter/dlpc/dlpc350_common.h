@@ -1,4 +1,4 @@
-/*
+﻿/*
  * dlpc350_common.h
  *
  * This module provides the common defines used by all the modules.

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * dlpc350_api.cpp
  *
  * This module provides C callable APIs for each of the command supported
@@ -586,16 +586,16 @@ int DLPC350_GetLedCurrents(unsigned char *pRed, unsigned char *pGreen, unsigned 
  * PWM current. The LED current is a function of the specific LED driver design.
  *
  * @param   pRed  - O - Red LED PWM current control Valid range, assuming normal polarity of PWM signals, is:
- *                      0x00 (0% duty cycle → Red LED driver generates no current
- *                      0xFF (100% duty cycle → Red LED driver generates maximum current))
+ *                      0x00 (0% duty cycle 竊・Red LED driver generates no current
+ *                      0xFF (100% duty cycle 竊・Red LED driver generates maximum current))
  *                      The current level corresponding to the selected PWM duty cycle is a function of the specific LED driver design and thus varies by design.
  * @param   pGreen  - O - Green LED PWM current control Valid range, assuming normal polarity of PWM signals, is:
- *                      0x00 (0% duty cycle → Red LED driver generates no current
- *                      0xFF (100% duty cycle → Red LED driver generates maximum current))
+ *                      0x00 (0% duty cycle 竊・Red LED driver generates no current
+ *                      0xFF (100% duty cycle 竊・Red LED driver generates maximum current))
  *                      The current level corresponding to the selected PWM duty cycle is a function of the specific LED driver design and thus varies by design.
  * @param   pBlue  - O - Blue LED PWM current control Valid range, assuming normal polarity of PWM signals, is:
- *                      0x00 (0% duty cycle → Red LED driver generates no current
- *                      0xFF (100% duty cycle → Red LED driver generates maximum current))
+ *                      0x00 (0% duty cycle 竊・Red LED driver generates no current
+ *                      0xFF (100% duty cycle 竊・Red LED driver generates maximum current))
  *                      The current level corresponding to the selected PWM duty cycle is a function of the specific LED driver design and thus varies by design.
  *
  * @return  0 = PASS    <BR>
@@ -630,16 +630,16 @@ int DLPC350_SetLedCurrents(unsigned char RedCurrent, unsigned char GreenCurrent,
  * PWM current. The LED current is a function of the specific LED driver design.
  *
  * @param   RedCurrent  - I - Red LED PWM current control Valid range, assuming normal polarity of PWM signals, is:
- *                      0x00 (0% duty cycle → Red LED driver generates no current
- *                      0xFF (100% duty cycle → Red LED driver generates maximum current))
+ *                      0x00 (0% duty cycle 竊・Red LED driver generates no current
+ *                      0xFF (100% duty cycle 竊・Red LED driver generates maximum current))
  *                      The current level corresponding to the selected PWM duty cycle is a function of the specific LED driver design and thus varies by design.
  * @param   GreenCurrent  - I - Green LED PWM current control Valid range, assuming normal polarity of PWM signals, is:
- *                      0x00 (0% duty cycle → Red LED driver generates no current
- *                      0xFF (100% duty cycle → Red LED driver generates maximum current))
+ *                      0x00 (0% duty cycle 竊・Red LED driver generates no current
+ *                      0xFF (100% duty cycle 竊・Red LED driver generates maximum current))
  *                      The current level corresponding to the selected PWM duty cycle is a function of the specific LED driver design and thus varies by design.
  * @param   BlueCurrent  - I - Blue LED PWM current control Valid range, assuming normal polarity of PWM signals, is:
- *                      0x00 (0% duty cycle → Red LED driver generates no current
- *                      0xFF (100% duty cycle → Red LED driver generates maximum current))
+ *                      0x00 (0% duty cycle 竊・Red LED driver generates no current
+ *                      0xFF (100% duty cycle 竊・Red LED driver generates maximum current))
  *                      The current level corresponding to the selected PWM duty cycle is a function of the specific LED driver design and thus varies by design.
  *
  * @return  0 = PASS    <BR>
@@ -1313,9 +1313,9 @@ int DLPC350_SetRedLEDStrobeDelay(unsigned char rising, unsigned char falling)
  * The Red LED Enable Delay Control command sets the rising and falling edge delay of the Red LED enable signal.
  *
  * @param   rising  - I - Red LED enable rising edge delay control. Each bit adds 107.2 ns.
- *                        0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xFE = +7.1828 μs, 0xFF = +7.29 μs
+ *                        0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xFE = +7.1828 ﾎｼs, 0xFF = +7.29 ﾎｼs
  * @param   falling  - I - Red LED enable falling edge delay control. Each bit adds 107.2 ns.
- *                        0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xFE = +7.1828 μs, 0xFF = +7.29 μs
+ *                        0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xFE = +7.1828 ﾎｼs, 0xFF = +7.29 ﾎｼs
  *
  * @return  >=0 = PASS    <BR>
  *          <0 = FAIL  <BR>
@@ -1339,9 +1339,9 @@ int DLPC350_SetGreenLEDStrobeDelay(unsigned char rising, unsigned char falling)
  * The Green LED Enable Delay Control command sets the rising and falling edge delay of the Green LED enable signal.
  *
  * @param   rising  - I - Green LED enable rising edge delay control. Each bit adds 107.2 ns.
- *                        0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xFE = +7.1828 μs, 0xFF = +7.29 μs
+ *                        0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xFE = +7.1828 ﾎｼs, 0xFF = +7.29 ﾎｼs
  * @param   falling  - I - Green LED enable falling edge delay control. Each bit adds 107.2 ns.
- *                        0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xFE = +7.1828 μs, 0xFF = +7.29 μs
+ *                        0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xFE = +7.1828 ﾎｼs, 0xFF = +7.29 ﾎｼs
  *
  * @return  >=0 = PASS    <BR>
  *          <0 = FAIL  <BR>
@@ -1365,9 +1365,9 @@ int DLPC350_SetBlueLEDStrobeDelay(unsigned char rising, unsigned char falling)
  * The Blue LED Enable Delay Control command sets the rising and falling edge delay of the Blue LED enable signal.
  *
  * @param   rising  - I - Blue LED enable rising edge delay control. Each bit adds 107.2 ns.
- *                        0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xFE = +7.1828 μs, 0xFF = +7.29 μs
+ *                        0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xFE = +7.1828 ﾎｼs, 0xFF = +7.29 ﾎｼs
  * @param   falling  - I - Blue LED enable falling edge delay control. Each bit adds 107.2 ns.
- *                        0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xFE = +7.1828 μs, 0xFF = +7.29 μs
+ *                        0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xFE = +7.1828 ﾎｼs, 0xFF = +7.29 ﾎｼs
  *
  * @return  >=0 = PASS    <BR>
  *          <0 = FAIL  <BR>
@@ -1391,9 +1391,9 @@ int DLPC350_GetRedLEDStrobeDelay(unsigned char *pRising, unsigned char *pFalling
  * This command reads back the rising and falling edge delay of the Red LED enable signal.
  *
  * @param   pRising  - O - Red LED enable rising edge delay value. Each bit adds 107.2 ns.
- *                        0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xFE = +7.1828 μs, 0xFF = +7.29 μs
+ *                        0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xFE = +7.1828 ﾎｼs, 0xFF = +7.29 ﾎｼs
  * @param   pFalling  - O - Red LED enable falling edge delay value. Each bit adds 107.2 ns.
- *                        0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xFE = +7.1828 μs, 0xFF = +7.29 μs
+ *                        0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xFE = +7.1828 ﾎｼs, 0xFF = +7.29 ﾎｼs
  *
  * @return  >=0 = PASS    <BR>
  *          <0 = FAIL  <BR>
@@ -1421,9 +1421,9 @@ int DLPC350_GetGreenLEDStrobeDelay(unsigned char *pRising, unsigned char *pFalli
  * This command reads back the rising and falling edge delay of the Green LED enable signal.
  *
  * @param   pRising  - O - Green LED enable rising edge delay value. Each bit adds 107.2 ns.
- *                        0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xFE = +7.1828 μs, 0xFF = +7.29 μs
+ *                        0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xFE = +7.1828 ﾎｼs, 0xFF = +7.29 ﾎｼs
  * @param   pFalling  - O - Green LED enable falling edge delay value. Each bit adds 107.2 ns.
- *                        0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xFE = +7.1828 μs, 0xFF = +7.29 μs
+ *                        0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xFE = +7.1828 ﾎｼs, 0xFF = +7.29 ﾎｼs
  *
  * @return  >=0 = PASS    <BR>
  *          <0 = FAIL  <BR>
@@ -1451,9 +1451,9 @@ int DLPC350_GetBlueLEDStrobeDelay(unsigned char *pRising, unsigned char *pFallin
  * This command reads back the rising and falling edge delay of the Blue LED enable signal.
  *
  * @param   pRising  - O - Blue LED enable rising edge delay value. Each bit adds 107.2 ns.
- *                        0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xFE = +7.1828 μs, 0xFF = +7.29 μs
+ *                        0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xFE = +7.1828 ﾎｼs, 0xFF = +7.29 ﾎｼs
  * @param   pFalling  - O - Blue LED enable falling edge delay value. Each bit adds 107.2 ns.
- *                        0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xFE = +7.1828 μs, 0xFF = +7.29 μs
+ *                        0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xFE = +7.1828 ﾎｼs, 0xFF = +7.29 ﾎｼs
  *
  * @return  >=0 = PASS    <BR>
  *          <0 = FAIL  <BR>
@@ -2343,7 +2343,7 @@ int DLPC350_AddToPatLut(int TrigType, int PatNum,int BitDepth,int LEDSelect,bool
  *                          7 = White (Red + Blue + Green)
  * @param   InvertPat  - I - true = Invert pattern
  *                           false = do not invert pattern
- * @param   InsertBlack  - I - true = Insert black-fill pattern after current pattern. This setting requires 230 μs
+ * @param   InsertBlack  - I - true = Insert black-fill pattern after current pattern. This setting requires 230 ﾎｼs
  *                                      of time before the start of the next pattern
  *                           false = do not insert any post pattern
  * @param   BufSwap  - I - true = perform a buffer swap
@@ -2426,7 +2426,7 @@ int DLPC350_AddToExpLut(int TrigType, int PatNum,int BitDepth,int LEDSelect,bool
  *                          7 = White (Red + Blue + Green)
  * @param   InvertPat  - I - true = Invert pattern
  *                           false = do not invert pattern
- * @param   InsertBlack  - I - true = Insert black-fill pattern after current pattern. This setting requires 230 μs
+ * @param   InsertBlack  - I - true = Insert black-fill pattern after current pattern. This setting requires 230 ﾎｼs
  *                                      of time before the start of the next pattern
  *                           false = do not insert any post pattern
  * @param   BufSwap  - I - true = perform a buffer swap
@@ -2514,7 +2514,7 @@ int DLPC350_GetPatLutItem(int index, int *pTrigType, int *pPatNum,int *pBitDepth
  *                          7 = White (Red + Blue + Green)
  * @param   *pInvertPat  - O - true = Invert pattern
  *                           false = do not invert pattern
- * @param   *pInsertBlack  - O - true = Insert black-fill pattern after current pattern. This setting requires 230 μs
+ * @param   *pInsertBlack  - O - true = Insert black-fill pattern after current pattern. This setting requires 230 ﾎｼs
  *                                      of time before the start of the next pattern
  *                           false = do not insert any post pattern
  * @param   *pBufSwap  - O - true = perform a buffer swap
@@ -2588,7 +2588,7 @@ int DLPC350_GetVarExpPatLutItem(int index, int *pTrigType, int *pPatNum,int *pBi
  *                          7 = White (Red + Blue + Green)
  * @param   *pInvertPat  - O - true = Invert pattern
  *                           false = do not invert pattern
- * @param   *pInsertBlack  - O - true = Insert black-fill pattern after current pattern. This setting requires 230 μs
+ * @param   *pInsertBlack  - O - true = Insert black-fill pattern after current pattern. This setting requires 230 ﾎｼs
  *                                      of time before the start of the next pattern
  *                           false = do not insert any post pattern
  * @param   *pBufSwap  - O - true = perform a buffer swap
@@ -3506,9 +3506,9 @@ int DLPC350_SetTrigOutConfig(unsigned int trigOutNum, bool invert, unsigned int 
  * @param   trigOutNum - I - 1 = TRIG_OUT_1; 2 = TRIG_OUT_2
  * @param   invert - I - 0 = active High signal; 1 = Active Low signal
  * @param   rising - I - rising edge delay control. Each bit adds 107.2 ns
- *                      0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xD4 = +2.68 μs, 0xD5 = +2.787 μs
+ *                      0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xD4 = +2.68 ﾎｼs, 0xD5 = +2.787 ﾎｼs
  * @param   falling- I - falling edge delay control. Each bit adds 107.2 ns (This field is not applcable for TRIG_OUT_2)
- *                      0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xD4 = +2.68 μs, 0xD5 = +2.787 μs
+ *                      0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xD4 = +2.68 ﾎｼs, 0xD5 = +2.787 ﾎｼs
  *
  * @return  >=0 = PASS    <BR>
  *          <0 = FAIL  <BR>
@@ -3546,9 +3546,9 @@ int DLPC350_GetTrigOutConfig(unsigned int trigOutNum, bool *pInvert,unsigned int
  * @param   trigOutNum - I - 1 = TRIG_OUT_1; 2 = TRIG_OUT_2
  * @param   *pInvert - O - 0 = active High signal; 1 = Active Low signal
  * @param   *pRising - O - rising edge delay control. Each bit adds 107.2 ns
- *                      0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xD4 = +2.68 μs, 0xD5 = +2.787 μs
+ *                      0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xD4 = +2.68 ﾎｼs, 0xD5 = +2.787 ﾎｼs
  * @param   *pFalling- O - falling edge delay control. Each bit adds 107.2 ns (This field is not applcable for TRIG_OUT_2)
- *                      0x00 = -20.05 μs, 0x01 = -19.9428 μs, ......0xBB=0.00 μs, ......, 0xD4 = +2.68 μs, 0xD5 = +2.787 μs
+ *                      0x00 = -20.05 ﾎｼs, 0x01 = -19.9428 ﾎｼs, ......0xBB=0.00 ﾎｼs, ......, 0xD4 = +2.68 ﾎｼs, 0xD5 = +2.787 ﾎｼs
  *
  * @return  0 = PASS    <BR>
  *          -1 = FAIL  <BR>

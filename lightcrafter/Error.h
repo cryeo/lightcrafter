@@ -1,4 +1,4 @@
-#ifndef _ERROR_H_
+﻿#ifndef _ERROR_H_
 
 #define _ERROR_H_
 

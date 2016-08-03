@@ -1,4 +1,4 @@
-/*
+﻿/*
  * dlpc350_firmware.h
  *
  * This module handles building and parsing of firmware images

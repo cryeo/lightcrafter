@@ -1,4 +1,4 @@
-/*
+﻿/*
  * dlpc350_BMPParser.h
  *
  * This module handles parsing BMP Image content

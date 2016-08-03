@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Helper.h
  *
  * This module has the helper functions used by other modules.

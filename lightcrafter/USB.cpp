@@ -1,4 +1,4 @@
-#include "USB.h"
+﻿#include "USB.h"
 
 namespace LightCrafter {
 	namespace USB {
