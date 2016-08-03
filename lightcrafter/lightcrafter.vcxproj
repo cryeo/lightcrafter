@@ -33,7 +33,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120_CTP_Nov2012</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>false</CLRSupport>
   </PropertyGroup>
@@ -47,7 +47,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120_CTP_Nov2012</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -157,6 +157,7 @@
     <ClCompile Include="dlpc\dlpc350_api.cpp" />
     <ClCompile Include="dlpc\dlpc350_common.cpp" />
     <ClCompile Include="dlpc\dlpc350_usb.cpp" />
+    <ClCompile Include="Error.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="USB.cpp" />
   </ItemGroup>
@@ -166,6 +167,7 @@
     <ClInclude Include="dlpc\dlpc350_common.h" />
     <ClInclude Include="dlpc\dlpc350_error.h" />
     <ClInclude Include="dlpc\dlpc350_usb.h" />
+    <ClInclude Include="Error.h" />
     <ClInclude Include="hidapi\hidapi.h" />
     <ClInclude Include="USB.h" />
   </ItemGroup>

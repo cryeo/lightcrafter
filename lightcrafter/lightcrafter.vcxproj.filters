@@ -48,6 +48,9 @@
     <ClCompile Include="USB.cpp">
       <Filter>ソース ファイル\lightcrafter</Filter>
     </ClCompile>
+    <ClCompile Include="Error.cpp">
+      <Filter>ソース ファイル\lightcrafter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dlpc\dlpc350_api.h">
@@ -69,6 +72,9 @@
       <Filter>ヘッダー ファイル\lightcrafter</Filter>
     </ClInclude>
     <ClInclude Include="USB.h">
+      <Filter>ヘッダー ファイル\lightcrafter</Filter>
+    </ClInclude>
+    <ClInclude Include="Error.h">
       <Filter>ヘッダー ファイル\lightcrafter</Filter>
     </ClInclude>
   </ItemGroup>
