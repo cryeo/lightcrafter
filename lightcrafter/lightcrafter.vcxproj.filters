@@ -13,10 +13,69 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\dlpc">
+      <UniqueIdentifier>{ecf8f7d1-5b2c-4a60-840b-5fad13d31b2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\dlpc">
+      <UniqueIdentifier>{890647bd-7d61-47c8-9363-cee907bbd740}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\hidapi">
+      <UniqueIdentifier>{2139f77d-b237-4aac-8769-1151bf443d46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\lightcrafter">
+      <UniqueIdentifier>{c99f3f20-7791-4d1b-829a-241cafe8b502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\lightcrafter">
+      <UniqueIdentifier>{15a967af-b5ab-44d7-84bf-4d727b00d58b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="dlpc\dlpc350_api.cpp">
+      <Filter>ソース ファイル\dlpc</Filter>
+    </ClCompile>
+    <ClCompile Include="dlpc\dlpc350_BMPParser.cpp">
+      <Filter>ソース ファイル\dlpc</Filter>
+    </ClCompile>
+    <ClCompile Include="dlpc\dlpc350_common.cpp">
+      <Filter>ソース ファイル\dlpc</Filter>
+    </ClCompile>
+    <ClCompile Include="dlpc\dlpc350_firmware.cpp">
+      <Filter>ソース ファイル\dlpc</Filter>
+    </ClCompile>
+    <ClCompile Include="dlpc\dlpc350_usb.cpp">
+      <Filter>ソース ファイル\dlpc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dlpc\dlpc350_api.h">
+      <Filter>ヘッダー ファイル\dlpc</Filter>
+    </ClInclude>
+    <ClInclude Include="dlpc\dlpc350_BMPParser.h">
+      <Filter>ヘッダー ファイル\dlpc</Filter>
+    </ClInclude>
+    <ClInclude Include="dlpc\dlpc350_common.h">
+      <Filter>ヘッダー ファイル\dlpc</Filter>
+    </ClInclude>
+    <ClInclude Include="dlpc\dlpc350_error.h">
+      <Filter>ヘッダー ファイル\dlpc</Filter>
+    </ClInclude>
+    <ClInclude Include="dlpc\dlpc350_firmware.h">
+      <Filter>ヘッダー ファイル\dlpc</Filter>
+    </ClInclude>
+    <ClInclude Include="dlpc\dlpc350_flashDevice.h">
+      <Filter>ヘッダー ファイル\dlpc</Filter>
+    </ClInclude>
+    <ClInclude Include="dlpc\dlpc350_usb.h">
+      <Filter>ヘッダー ファイル\dlpc</Filter>
+    </ClInclude>
+    <ClInclude Include="dlpc\Helper.h">
+      <Filter>ヘッダー ファイル\dlpc</Filter>
+    </ClInclude>
+    <ClInclude Include="hidapi\hidapi.h">
+      <Filter>ヘッダー ファイル\hidapi</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
