@@ -27,7 +27,7 @@ namespace LightCrafter {
 			std::vector<std::string> DMDParked = makeList<std::string>("DMD micromirrors are not parked", "DMD micromirrors are parked");
 			std::vector<std::string> sequenceRunning = makeList<std::string>("Sequencer is stopped", "Sequencer is running normally");
 			std::vector<std::string> bufferFrozen = makeList<std::string>("Frame buffer is not frozen", "Frame buffer is frozen");
-			std::vector<std::string> sgammaCorrection = makeList<std::string>("Gamma correction is disabled", "Gamma correction is enabled");
+			std::vector<std::string> gammaCorrection = makeList<std::string>("Gamma correction is disabled", "Gamma correction is enabled");
 		};
 	};
 };
