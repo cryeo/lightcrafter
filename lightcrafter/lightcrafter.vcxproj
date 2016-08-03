@@ -105,6 +105,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>./hidapi;./dlpc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,14 +150,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DLPC350.cpp" />
     <ClCompile Include="dlpc\dlpc350_api.cpp" />
     <ClCompile Include="dlpc\dlpc350_BMPParser.cpp" />
     <ClCompile Include="dlpc\dlpc350_common.cpp" />
     <ClCompile Include="dlpc\dlpc350_firmware.cpp" />
     <ClCompile Include="dlpc\dlpc350_usb.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="USB.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DLPC350.h" />
     <ClInclude Include="dlpc\dlpc350_api.h" />
     <ClInclude Include="dlpc\dlpc350_BMPParser.h" />
     <ClInclude Include="dlpc\dlpc350_common.h" />
@@ -166,6 +170,7 @@
     <ClInclude Include="dlpc\dlpc350_usb.h" />
     <ClInclude Include="dlpc\Helper.h" />
     <ClInclude Include="hidapi\hidapi.h" />
+    <ClInclude Include="USB.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

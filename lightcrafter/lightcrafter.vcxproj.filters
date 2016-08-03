@@ -48,6 +48,12 @@
     <ClCompile Include="dlpc\dlpc350_usb.cpp">
       <Filter>ソース ファイル\dlpc</Filter>
     </ClCompile>
+    <ClCompile Include="DLPC350.cpp">
+      <Filter>ソース ファイル\lightcrafter</Filter>
+    </ClCompile>
+    <ClCompile Include="USB.cpp">
+      <Filter>ソース ファイル\lightcrafter</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dlpc\dlpc350_api.h">
@@ -76,6 +82,12 @@
     </ClInclude>
     <ClInclude Include="hidapi\hidapi.h">
       <Filter>ヘッダー ファイル\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="DLPC350.h">
+      <Filter>ヘッダー ファイル\lightcrafter</Filter>
+    </ClInclude>
+    <ClInclude Include="USB.h">
+      <Filter>ヘッダー ファイル\lightcrafter</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
