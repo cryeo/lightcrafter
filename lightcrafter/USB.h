@@ -6,7 +6,13 @@
 
 namespace LightCrafter {
 	namespace USB {
+		bool isConnected();
+		bool initialize();
+		bool open();
+		bool close();
+		bool exit();
 	};
 };
+
 
 #endif
