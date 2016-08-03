@@ -36,18 +36,14 @@
  *
 */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <memory>
+using namespace std;
+
 #include "dlpc350_usb.h"
 #ifdef Q_OS_WIN32
 #include <setupapi.h>
 #endif
 #include "hidapi.h"
-
-#include "mainwindow.h"
-#include "ui_mainwindow.h"
-#include <QMessageBox>
-#include <QTimer>
 
 /***************************************************
 *                  GLOBAL VARIABLES
