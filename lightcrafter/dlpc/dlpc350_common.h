@@ -193,7 +193,7 @@ uint32 Next2Power(uint32 Value);
 unsigned Hex2BinArray(char *HexStr, unsigned Size, uint8 *BinArray);
 int TrimString(char const *Input, char *Output);
 ErrorCode_t WriteTextToFile(char const *File, int Num, char const *Text);
-ErrorCode_t  ReadTextFromFile(char const *File, int Num, char *Text, int Len);
+ErrorCode_t ReadTextFromFile(char const *File, int Num, char *Text, int Len);
 BOOL FileExist(char const *File, int Num);
 
 

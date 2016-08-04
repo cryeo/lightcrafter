@@ -40,6 +40,8 @@
 #ifndef DLPC350_API_H
 #define DLPC350_API_H
 
+#include "dlpc350_common.h"
+
 typedef struct _hidmessageStruct
 {
     struct _hidhead

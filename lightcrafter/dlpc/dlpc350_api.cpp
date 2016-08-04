@@ -2752,20 +2752,20 @@ int DLPC350_SendVarExpPatLut(void)
         if(DLPC350_SetVarExpMboxAddr(i/3) < 0)
             return -1;
 
-        msg.text.data[2] = g_ExpLut[i];
-        msg.text.data[3] = g_ExpLut[i]>>8;
-        msg.text.data[4] = g_ExpLut[i]>>16;
-        msg.text.data[5] = g_ExpLut[i]>>24;
+        msg.text.data[2] = static_cast<unsigned char>(g_ExpLut[i]);
+        msg.text.data[3] = static_cast<unsigned char>(g_ExpLut[i]>>8);
+        msg.text.data[4] = static_cast<unsigned char>(g_ExpLut[i]>>16);
+        msg.text.data[5] = static_cast<unsigned char>(g_ExpLut[i]>>24);
 
-        msg.text.data[6] = g_ExpLut[i+1];
-        msg.text.data[7] = g_ExpLut[i+1]>>8;
-        msg.text.data[8] = g_ExpLut[i+1]>>16;
-        msg.text.data[9] = g_ExpLut[i+1]>>24;
+        msg.text.data[6] = static_cast<unsigned char>(g_ExpLut[i+1]);
+        msg.text.data[7] = static_cast<unsigned char>(g_ExpLut[i+1]>>8);
+        msg.text.data[8] = static_cast<unsigned char>(g_ExpLut[i+1]>>16);
+        msg.text.data[9] = static_cast<unsigned char>(g_ExpLut[i+1]>>24);
 
-        msg.text.data[10] = g_ExpLut[i+2];
-        msg.text.data[11] = g_ExpLut[i+2]>>8;
-        msg.text.data[12] = g_ExpLut[i+2]>>16;
-        msg.text.data[13] = g_ExpLut[i+2]>>24;
+        msg.text.data[10] = static_cast<unsigned char>(g_ExpLut[i+2]);
+        msg.text.data[11] = static_cast<unsigned char>(g_ExpLut[i+2]>>8);
+        msg.text.data[12] = static_cast<unsigned char>(g_ExpLut[i+2]>>16);
+        msg.text.data[13] = static_cast<unsigned char>(g_ExpLut[i+2]>>24);
         DLPC350_SendMsg(&msg,true);
     }
 
@@ -2864,9 +2864,9 @@ int DLPC350_SendPatLut(void)
 
     for(i=0; i<g_PatLutIndex; i++)
     {
-        msg.text.data[2+3*i] = g_PatLut[i];
-        msg.text.data[2+3*i+1] = g_PatLut[i]>>8;
-        msg.text.data[2+3*i+2] = g_PatLut[i]>>16;
+        msg.text.data[2+3*i] = static_cast<unsigned char>(g_PatLut[i]);
+        msg.text.data[2+3*i+1] = static_cast<unsigned char>(g_PatLut[i]>>8);
+        msg.text.data[2+3*i+2] = static_cast<unsigned char>(g_PatLut[i]>>16);
     }
 
     DLPC350_SendMsg(&msg,true);

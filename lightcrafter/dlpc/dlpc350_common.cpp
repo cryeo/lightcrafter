@@ -157,7 +157,7 @@ int TrimString(char const *Input, char *Output)
     int Start = 0;
     int Length;
 
-    Length = strlen(Input);
+    Length = static_cast<unsigned int>(strlen(Input));
 
     while(Start < Length)
     {
