@@ -10,11 +10,11 @@
 namespace LightCrafter {
 	namespace Util {
 		template<typename T, typename ...Args>
-		inline std::vector<T> makeList(Args... args) {
-			return std::vector<T>(args...);
+		extern inline std::vector<T> makeList(Args... args) {
+			return std::initializer_list<T>{args...};
 		}
 
-        void sleep(int ms);
+        extern void sleep(uint32_t ms);
 	};
 };
 
