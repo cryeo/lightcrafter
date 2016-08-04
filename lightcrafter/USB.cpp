@@ -1,4 +1,5 @@
 ﻿#include "USB.h"
+#include "dlpc350_usb.h"
 
 namespace LightCrafter {
 	namespace USB {

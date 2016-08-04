@@ -2,15 +2,13 @@
 
 #define _USB_H_
 
-#include "dlpc350_usb.h"
-
 namespace LightCrafter {
 	namespace USB {
-		bool isConnected();
-		bool initialize();
-		bool open();
-		bool close();
-		bool exit();
+		extern bool isConnected();
+		extern bool initialize();
+		extern bool open();
+		extern bool close();
+		extern bool exit();
 	};
 };
 
