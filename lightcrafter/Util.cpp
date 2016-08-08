@@ -1,5 +1,8 @@
 ﻿#include "Util.h"
 
+#include <chrono>
+#include <thread>
+
 namespace LightCrafter {
 	namespace Util {
 		inline void sleep(uint32_t ms) {

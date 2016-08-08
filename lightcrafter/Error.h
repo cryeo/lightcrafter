@@ -1,8 +1,7 @@
-﻿#ifndef _ERROR_H_
+﻿#ifndef _LIGHTCRAFTER_ERROR_H_
 
-#define _ERROR_H_
+#define _LIGHTCRAFTER_ERROR_H_
 
-#include "dlpc350_usb.h"
 #include "Util.h"
 #include <vector>
 #include <string>
