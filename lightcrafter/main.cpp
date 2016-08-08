@@ -40,6 +40,37 @@ void showVersion(A version) {
 	std::printf("** Sequence Configuration Revision : %d.%d.%d\n", version->sequenceConfig.major, version->sequenceConfig.minor, version->sequenceConfig.patch);
 }
 
+template <typename Enumeration>
+auto as_integer(Enumeration const value)
+-> typename int
+{
+	return static_cast<int>(value);
+}
+
+namespace Logger {
+	template<typename...Args>
+	struct Log;
+	template<typename T, typename...Args>
+	struct Log<T, Args...> {
+		void operator()(T head, Args... tail) {
+			cout << " ";
+			cout << head;
+			Log<Args...>{}(tail...);
+		}
+	};
+	template<>
+	struct Log<> {
+		void operator()() {
+			cout << std::endl;
+		}
+	};
+	template<typename T, typename... Args>
+	void log(T t, Args... args) {
+		cout << t;
+		Log<Args...>{}(args...);
+	}
+};
+
 int main() {
 	LightCrafter::DLPC350 lc;
 
@@ -92,15 +123,16 @@ int main() {
 		else { // Standby mode
 		}
 
-		int t;
+		using namespace Logger;
 
-		cout << "Pattern Mode" << endl;
-		lc.setDisplayMode(DLPC350::DisplayMode::PATTERN);
-		lc.setPatternDisplayMode(DLPC350::PatternDisplayMode::INTERNAL);
-		lc.setPatternPeriod(2700, 3000);
-		lc.setPatternTriggerMode(DLPC350::PatternTriggerMode::MODE1);
-
-		lc.clearPatternSequence();
+		log("setDisplayMode", lc.setDisplayMode(DLPC350::DisplayMode::PATTERN));
+		log("setLEDCurrent", lc.setLEDCurrent(255, 255, 255));
+		log("getPatternDisplayMode", as_integer(*lc.getPatternDisplayMode()));
+		log("setPatternDisplayMode", lc.setPatternDisplayMode(DLPC350::PatternDisplayMode::INTERNAL));
+		log("getPatternDisplayMode", as_integer(*lc.getPatternDisplayMode()));
+		log("setPatternPeriod", lc.setPatternPeriod(2700, 3000));
+		log("setPatternTriggerMode", lc.setPatternTriggerMode(DLPC350::PatternTriggerMode::MODE1));
+		log("clearPatternSequence", lc.clearPatternSequence());
 
 		using Pattern = DLPC350::Pattern;
 		using Bit = Pattern::BitIndex;
@@ -124,8 +156,16 @@ int main() {
 		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 3, Bit::B1);
 		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 3, Bit::B2);
 
-		cout << lc.checkPatternSequence() << endl;
-		cout << lc.sendPatternSequence() << endl;
+		log("checkPatternSequence", lc.checkPatternSequence());
+		log("sendPatternSequence", lc.sendPatternSequence());
+
+		log("validatePatternSequence", lc.validatePatternSequence()->isValid());
+
+		lc.setPatternSequenceStatus(DLPC350::PatternSequenceStatus::START);
+		int t;
+		cin >> t;
+		lc.setPatternSequenceStatus(DLPC350::PatternSequenceStatus::STOP);
+
 		//cout << "Video Mode" << endl;
 		//lc.setDisplayMode(DLPC350::DisplayMode::VIDEO);
 		//cin >> t;

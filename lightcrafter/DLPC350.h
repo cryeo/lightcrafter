@@ -310,18 +310,6 @@ namespace LightCrafter {
 			uint8_t image[MAX_PACKET_SIZE];
 		};
 
-		void addPatternToSequence(
-			Pattern::Color color,
-			Pattern::TriggerType triggerType,
-			uint8_t bitDepth,
-			uint8_t imageIndex,
-			Pattern::BitIndex startBit,
-			bool invertPattern = false,
-			bool insertBlack = true);
-
-		void clearPatternSequence();
-		
-
 		DLPC350();
 		virtual ~DLPC350();
 
@@ -374,12 +362,38 @@ namespace LightCrafter {
 		bool closeMailbox();
 		bool setAddressInMailbox(uint8_t address);
 
-		bool configurePatternSequence(PatternSequence &patternSequence, bool repeat = true, uint8_t triggerOut2PulsePerPattern = 1);
+		bool addPatternToSequence(
+			Pattern::Color color,
+			Pattern::TriggerType triggerType,
+			uint8_t bitDepth,
+			uint8_t imageIndex,
+			Pattern::BitIndex startBit,
+			bool invertPattern = false,
+			bool insertBlack = true);
 
+		bool clearPatternSequence();
+		bool configurePatternSequence(PatternSequence &patternSequence, bool repeat = true, uint8_t triggerOut2PulsePerPattern = 1);
 		bool checkPatternSequence();
 		bool sendPatternSequence();
 		bool sendPatternSequence(PatternSequence &patternSequence);
 		bool sendImageSequence(PatternSequence &patternSequence);
+
+
+		union Validation {
+			uint8_t value;
+			struct {
+				bool invalidPeriod : 1;
+				bool invalidPattern : 1;
+				bool overlapTriggerOut1: 1;
+				bool missingBlackVector : 1;
+				bool invalidPeriodDifference: 1;
+				uint8_t : 3;
+			};
+			Validation(uint8_t _value) : value(_value) {}
+			inline bool isValid() { return (value & ((1 << 5) - 1)) == 0; }
+		};
+
+		std::shared_ptr<Validation> validatePatternSequence();
 
 	private:
 		std::shared_ptr<uint8_t> transact(USB::Transaction &tran);
@@ -396,127 +410,6 @@ namespace LightCrafter {
 		PatternSequence patternSequence;
 	};
 };
-
-//namespace LightCrafter {
-//	class DLPC350 {
-//	public:
-
-//		struct Pattern {
-//			enum class TriggerType : int32_t {
-//				INTERNAL = 0,
-//				EXTERNAL_POSITIVE = 1,
-//				EXTERNAL_NEGATIVE = 2,
-//				NO_TRIGGER = 3
-//			} triggerType;
-//
-//			int32_t patternNumber;
-//			int32_t bitDepth;
-//
-//			enum class LEDType : int32_t {
-//				PASS = 0,
-//				RED = 1,
-//				GREEN = 2,
-//				YELLOW = 3,
-//				BLUE = 4,
-//				MAGENTA = 5,
-//				CYAN = 6,
-//				WHITE = 7
-//			} LED;
-//			
-//			int32_t frameIndex;
-//			
-//			enum class BitIndex : int32_t {
-//				G0 = 1,
-//				G1 = 2,
-//				G2 = 3,
-//				G3 = 4,
-//				G4 = 5,
-//				G5 = 6,
-//				G6 = 7,
-//				G7 = 8,
-//				R0 = 9,
-//				R1 = 10,
-//				R2 = 11,
-//				R3 = 12,
-//				R4 = 13,
-//				R5 = 14,
-//				R6 = 15,
-//				R7 = 16,
-//				B0 = 17,
-//				B1 = 18,
-//				B2 = 19,
-//				B3 = 20,
-//				B4 = 21,
-//				B5 = 22,
-//				B6 = 23,
-//				B7 = 24
-//			};
-//
-//			bool invertPattern;
-//			bool insertBlack;
-//			bool bufferSwap;
-//			bool triggerOutPrevious;
-//		};
-//
-//		bool clearLUT();
-//		bool addPatternToLUT(
-//			DLPC350::Pattern::LEDType LED,
-//			DLPC350::Pattern::TriggerType triggerType,
-//			int32_t bigDepth,
-//			int32_t frameIndex,
-//			DLPC350::Pattern::BitIndex startBit,
-//			DLPC350::Pattern::BitIndex endBit,
-//			bool invertPattern,
-//			bool insertBlack);
-//		bool sendLUT();
-//
-//		bool getInputSource();
-//		bool setInputSource(InputSource source, uint32_t option);
-//
-//		bool setLEDStatus(LEDStatus status);
-//		bool setLEDStatus(uint8_t red, uint8_t green, uint8_t blue);
-//		bool getLEDStatus();
-//
-//		DLPC350();
-//		virtual ~DLPC350();
-//		bool connect();
-//
-//		bool getStatus();
-//		bool getVersion();
-//		bool getFirmwareTag();
-//
-//		bool getNumImagesInFlash();
-//
-//		bool getPowerMode();
-//
-//		bool getPatternTriggerMode();
-//
-//		bool getPatternDisplayMode();
-//
-//		bool getDisplayMode();
-//		bool setDisplayMode(DisplayMode mode);
-//
-//		bool getPatternSequenceStatus();
-//		bool setPatternSequenceStatus(PatternSequenceStatus mode);
-//	private:
-//		int patternTriggerMode;
-//
-//		PatternDisplayMode patternDisplayMode;
-//		DisplayMode displayMode;
-//		PatternSequenceStatus patternSequenceStatus;
-//		LEDStatus LED;
-//
-//		InputSource inputSource;
-//		InputBits portWidth;
-//		uint32_t patternIndex;
-//
-//		std::vector<Pattern> LUT;
-//
-//		// FOR DEBUG
-//		void showStatus();
-//		void showVersion();
-//	};
-//};
 
 #endif
 

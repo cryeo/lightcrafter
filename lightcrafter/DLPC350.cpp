@@ -44,7 +44,8 @@ namespace LightCrafter {
 			auto receivedTransaction = USB::read();
 
 			if (receivedTransaction == nullptr) return nullptr;
-			if (receivedTransaction->head.flags.error || receivedTransaction->head.length == 0) return nullptr;
+			if (receivedTransaction->head.flags.error || 
+				(receivedTransaction->head.flags.rw == USB::TransactionType::READ &&	receivedTransaction->head.length == 0)) return nullptr;
 
 			std::shared_ptr<uint8_t> ret(new uint8_t[BUFFER_SIZE], std::default_delete<uint8_t[]>());
 			memcpy(ret.get(), receivedTransaction->data.raw, BUFFER_SIZE);
@@ -492,13 +493,13 @@ namespace LightCrafter {
 		uint8_t *exposurePtr = reinterpret_cast<uint8_t *>(&exposure);
 		uint8_t *framePtr = reinterpret_cast<uint8_t *>(&frame);
 
-		std::shared_ptr<uint8_t> result = transactForSet(0x1A, 0x39, *exposurePtr, *(exposurePtr + 1), *framePtr, *(framePtr + 1));
+		std::shared_ptr<uint8_t> result = transactForSet(0x1A, 0x29, *exposurePtr, *(exposurePtr + 1), *(exposurePtr + 2), *(exposurePtr + 3), *framePtr, *(framePtr + 1), *(framePtr + 2), *(framePtr + 3));
 		uint8_t *ptr = result.get();
 		return (ptr != nullptr);
 	}
 
 	using Pattern = DLPC350::Pattern;
-	void DLPC350::addPatternToSequence(
+	bool DLPC350::addPatternToSequence(
 		Pattern::Color color,
 		Pattern::TriggerType triggerType,
 		uint8_t bitDepth,
@@ -544,10 +545,13 @@ namespace LightCrafter {
 
 		Pattern pattern(color, triggerType, bitDepth, imageIndex, patternNumber, invertPattern, insertBlack, bufferSwap, triggerOutPrevious);
 		patternSequence.addPattern(pattern);
+
+		return true;
 	}
 
-	void DLPC350::clearPatternSequence() {
+	bool DLPC350::clearPatternSequence() {
 		patternSequence.clear();
+		return true;
 	}
 
 	bool DLPC350::checkPatternSequence() {
@@ -593,7 +597,7 @@ namespace LightCrafter {
 	}
 
 	bool DLPC350::sendPatternSequence() {
-		if (!configurePatternSequence(patternSequence)) return false;
+		if (!configurePatternSequence(patternSequence, false)) return false;
 		if (!sendPatternSequence(patternSequence)) return false;
 		if (!sendImageSequence(patternSequence)) return false;
 		return true;
@@ -608,8 +612,21 @@ namespace LightCrafter {
 	*
 	*/
 	bool DLPC350::configurePatternSequence(PatternSequence &patternSequence, bool repeat, uint8_t triggerOut2PulsePerPattern) {
-		uint8_t a = 19, b = 1, c = 0;
-		std::shared_ptr<uint8_t> result = transactForSet(0x1A, 0x31, a,b,c,c);
+		std::shared_ptr<uint8_t> result;
+		if (repeat) {
+			result = transactForSet(0x1A, 0x31,
+				static_cast<uint8_t>(patternSequence.size() - 1),
+				static_cast<uint8_t>(repeat),
+				static_cast<uint8_t>(triggerOut2PulsePerPattern - 1),
+				static_cast<uint8_t>(patternSequence.sizeImage() - 1));
+		}
+		else {
+			result = transactForSet(0x1A, 0x31,
+				static_cast<uint8_t>(patternSequence.size() - 1),
+				static_cast<uint8_t>(repeat),
+				static_cast<uint8_t>(patternSequence.size() - 1),
+				static_cast<uint8_t>(patternSequence.sizeImage() - 1));
+		}
 		uint8_t *ptr = result.get();
 		return (ptr != nullptr);
 	}
@@ -671,12 +688,15 @@ namespace LightCrafter {
 		auto send = USB::transaction(TransactionType::WRITE, 0x1A, 0x34);
 		
 		uint16_t *length = &send.head.length;
-		uint32_t *param = reinterpret_cast<uint32_t *>(send.data.raw[2]);
+		uint8_t *param = &send.data.raw[2];
 		
 		for (size_t i = 0; i < patternSequence.size(); i++) {
 			Pattern& pattern = patternSequence.get(i);
+			uint8_t *value = reinterpret_cast<uint8_t *>(&pattern.data.value);
 			*length += 3;
-			*(param++) = pattern.data.value;
+			*(param++) = *(value++);
+			*(param++) = *(value++);
+			*(param++) = *(value++);
 		}
 
 		auto result = transact(send);
@@ -714,5 +734,20 @@ namespace LightCrafter {
 		closeMailbox();
 
 		return (result != nullptr);
+	}
+
+	/**
+	* validatePatternSequence
+	* CMD2 : 0x1A, CMD3 : 0x1A
+	* @param
+	*
+	* @return
+	*
+	*/
+	using Validation = DLPC350::Validation;
+	std::shared_ptr<Validation> DLPC350::validatePatternSequence() {
+		std::shared_ptr<uint8_t> result = transactForGet(0x1A, 0x1A);
+
+		return std::shared_ptr<Validation>(new Validation(*result));
 	}
 };
