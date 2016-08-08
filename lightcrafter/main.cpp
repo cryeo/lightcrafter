@@ -136,6 +136,25 @@ int main() {
 
 		using Pattern = DLPC350::Pattern;
 		using Bit = Pattern::BitIndex;
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::G0);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::G1);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::G2);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::G3);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::G4);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::G5);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::G6);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::G7);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::R0);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::R1);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::R2);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::R3);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::R4);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::R5);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::R6);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::R7);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::B0);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::B1);
+		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 2, Bit::B2);
 		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 3, Bit::G0);
 		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 3, Bit::G1);
 		lc.addPatternToSequence(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 3, Bit::G2);
@@ -160,8 +179,12 @@ int main() {
 		log("sendPatternSequence", lc.sendPatternSequence());
 
 		log("validatePatternSequence", lc.validatePatternSequence()->isValid());
-
-		lc.setPatternSequenceStatus(DLPC350::PatternSequenceStatus::START);
+		lc.setPatternSequenceStatus(DLPC350::PatternSequenceStatus::STOP);
+		while (true) {
+			lc.setPatternSequenceStatus(DLPC350::PatternSequenceStatus::START);
+			if (*lc.getPatternSequenceStatus() == DLPC350::PatternSequenceStatus::START) break;
+		}
+		cout << "Started" << endl;
 		int t;
 		cin >> t;
 		lc.setPatternSequenceStatus(DLPC350::PatternSequenceStatus::STOP);

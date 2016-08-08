@@ -537,6 +537,9 @@ namespace LightCrafter {
 			bufferSwap = (previousImageIndex != imageIndex);
 		}
 
+		if (bufferSwap) {
+			std::cout << "1";
+		}
 		if (*patternDisplayMode == DLPC350::PatternDisplayMode::EXTERNAL) {
 			triggerType = bufferSwap ? Pattern::TriggerType::EXTERNAL_POSITIVE : Pattern::TriggerType::NO_TRIGGER;
 		}
@@ -597,7 +600,7 @@ namespace LightCrafter {
 	}
 
 	bool DLPC350::sendPatternSequence() {
-		if (!configurePatternSequence(patternSequence, false)) return false;
+		if (!configurePatternSequence(patternSequence)) return false;
 		if (!sendPatternSequence(patternSequence)) return false;
 		if (!sendImageSequence(patternSequence)) return false;
 		return true;
@@ -729,6 +732,9 @@ namespace LightCrafter {
 			*(param++) = patternSequence.getImage(i);
 		}
 
+		if (*length == 4) {
+			std::swap(*(param - 1), *(param - 2));
+		}
 		auto result = transact(send);
 
 		closeMailbox();
