@@ -1,6 +1,6 @@
-﻿#include "Error.h"
+﻿#include "Error.hpp"
 
-namespace LightCrafter {
+namespace LC4500 {
 	namespace Error {
 		namespace HSR {
 			std::vector<std::string> initDone = { "Error", "Successful" };

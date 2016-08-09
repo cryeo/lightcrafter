@@ -1,12 +1,12 @@
-﻿#ifndef _LIGHTCRAFTER_ERROR_H_
+﻿#ifndef _LC4500_ERROR_H_
 
-#define _LIGHTCRAFTER_ERROR_H_
+#define _LC4500_ERROR_H_
 
-#include "Util.h"
+#include "Util.hpp"
 #include <vector>
 #include <string>
 
-namespace LightCrafter {
+namespace LC4500 {
 	namespace Error {
 		namespace HSR {
 			extern std::vector<std::string> initDone;
