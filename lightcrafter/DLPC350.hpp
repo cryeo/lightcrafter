@@ -1,8 +1,7 @@
-﻿#ifndef _LIGHTCRAFTER_DLPC350_H_
+#ifndef _LC4500_DLPC350_H_
+#define _LC4500_DLPC350_H_
 
-#define _LIGHTCRAFTER_DLPC350_H_
-
-#include "USB.h"
+#include "Transaction.hpp"
 
 #include <string>
 #include <cstdint>
@@ -88,14 +87,14 @@ namespace LightCrafter {
 			struct {
 				bool initDone : 1; // 0 : error
 				uint8_t : 1; // reserved
-				bool DRCError : 1; // 1 : error
-				bool forcedSwap : 1; // 1 : error
-				uint8_t : 2; // reserved
-				bool sequenceAbort : 1; // 1 : error
-				bool sequenceError : 1; // 1 :: error
+						  bool DRCError : 1; // 1 : error
+						  bool forcedSwap : 1; // 1 : error
+						  uint8_t : 2; // reserved
+									bool sequenceAbort : 1; // 1 : error
+									bool sequenceError : 1; // 1 :: error
 			};
 		};
-		
+
 		union SystemStatus {
 			uint8_t value;
 			struct {
@@ -103,7 +102,7 @@ namespace LightCrafter {
 				uint8_t : 7; // reserved
 			};
 		};
-		
+
 		union MainStatus {
 			uint8_t value;
 			struct {
@@ -149,7 +148,7 @@ namespace LightCrafter {
 			LEDCurrent(uint32_t _value) : value(_value) {}
 			LEDCurrent(uint8_t _red, uint8_t _green, uint8_t _blue) : red(_red), green(_green), blue(_blue) {}
 		};
-	
+
 		union InputSource {
 			uint8_t value;
 			struct {
@@ -263,9 +262,9 @@ namespace LightCrafter {
 				bool _insertBlack,
 				bool _bufferSwap,
 				bool _triggerOutPrevious) :
-				data(_color, _triggerType, _bitDepth, _patternNumber, 
-					 _invertPattern, _insertBlack, _bufferSwap, 
-					 _triggerOutPrevious),
+				data(_color, _triggerType, _bitDepth, _patternNumber,
+					_invertPattern, _insertBlack, _bufferSwap,
+					_triggerOutPrevious),
 				imageIndex(_imageIndex) {}
 		};
 
@@ -323,11 +322,11 @@ namespace LightCrafter {
 		std::shared_ptr<std::string> getFirmwareTag();
 
 		std::shared_ptr<uint8_t> getNumImagesInFlash();
-		
-		
+
+
 		std::shared_ptr<PowerMode> getPowerMode();
 		bool setPowerMode(PowerMode mode);
-		
+
 		std::shared_ptr<DisplayMode> getDisplayMode();
 		bool setDisplayMode(DisplayMode mode);
 
@@ -384,9 +383,9 @@ namespace LightCrafter {
 			struct {
 				bool invalidPeriod : 1;
 				bool invalidPattern : 1;
-				bool overlapTriggerOut1: 1;
+				bool overlapTriggerOut1 : 1;
 				bool missingBlackVector : 1;
-				bool invalidPeriodDifference: 1;
+				bool invalidPeriodDifference : 1;
 				uint8_t : 3;
 			};
 			Validation(uint8_t _value) : value(_value) {}
@@ -396,21 +395,9 @@ namespace LightCrafter {
 		std::shared_ptr<Validation> validatePatternSequence();
 
 	private:
-		std::shared_ptr<uint8_t> transact(USB::Transaction &tran);
-		
-		std::shared_ptr<uint8_t> transactForGet(uint8_t cmd2, uint8_t cmd3);
-		
-		template<typename... ParamList>
-		std::shared_ptr<uint8_t> transactForSet(uint8_t cmd2, uint8_t cmd3, ParamList&&... params) {
-			auto send = USB::transaction(TransactionType::WRITE, cmd2, cmd3, std::forward<ParamList>(params)...);
-			auto result = transact(send);
-			return result;
-		}
 
 		PatternSequence patternSequence;
 	};
 };
 
 #endif
-
-
