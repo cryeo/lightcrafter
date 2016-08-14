@@ -174,7 +174,7 @@ namespace LC4500 {
 			PatternPeriod(uint16_t _exposure, uint16_t _frame) : exposure(_exposure), frame(_frame) {}
 		};
 
-		union Validation {
+		union PatternSequenceValidation {
 			uint8_t value;
 			struct {
 				bool invalidPeriod : 1;
@@ -184,8 +184,8 @@ namespace LC4500 {
 				bool invalidPeriodDifference : 1;
 				uint8_t : 3;
 			};
-			Validation() : value{ 0 } {}
-			Validation(uint8_t _value) : value(_value) {}
+			PatternSequenceValidation() : value{ 0 } {}
+			PatternSequenceValidation(uint8_t _value) : value(_value) {}
 			inline bool isValid() { return (value & ((1 << 5) - 1)) == 0; }
 		};
 
@@ -238,7 +238,7 @@ namespace LC4500 {
 		extern bool sendPatternDisplayLUT(PatternSequence &patternSequence);
 		extern bool sendPatternImageLUT(PatternSequence &patternSequence);
 
-		extern std::unique_ptr<Validation> validatePatternSequence();
+		extern std::unique_ptr<PatternSequenceValidation> validatePatternSequence();
 	};
 };
 

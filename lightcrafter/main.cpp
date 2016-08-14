@@ -4,7 +4,6 @@
 #include <algorithm>
 
 #include "LC4500/LC4500.hpp"
-#include "LC4500/USB/USB.hpp"
 
 using namespace std;
 using namespace LC4500;
@@ -37,33 +36,19 @@ void showVersion(unique_ptr<DLPC350::Version> &version) {
 }
 
 template <typename Enumeration>
-auto as_integer(Enumeration const value)
--> typename int
-{
-	return static_cast<int>(value);
-}
+auto as_integer(Enumeration const value) { return static_cast<int>(value); }
 
 namespace Logger {
-	template<typename...Args>
-	struct Log;
-	template<typename T, typename...Args>
-	struct Log<T, Args...> {
-		void operator()(T head, Args... tail) {
-			cout << " ";
-			cout << head;
-			Log<Args...>{}(tail...);
-		}
-	};
-	template<>
-	struct Log<> {
-		void operator()() {
-			cout << endl;
-		}
-	};
+	template<typename T>
+	inline void log(T t) {
+		std::cout << t << " ";
+	}
+
 	template<typename T, typename... Args>
-	void log(T t, Args... args) {
-		cout << t;
-		Log<Args...>{}(args...);
+	inline void log(T t, Args&&... args) {
+		log(t);
+		log(std::forward<Args>(args)...);
+		cout << endl;
 	}
 };
 
@@ -74,7 +59,7 @@ int main() {
 	if (USB::open()) {
 		cout << "Connected" << endl;
 
-		auto HSR = LC4500::DLPC350::getHardwareStatus();
+ 		auto HSR = LC4500::DLPC350::getHardwareStatus();
 		auto SSR = LC4500::DLPC350::getSystemStatus();
 		auto MSR = LC4500::DLPC350::getMainStatus();
 		if (!HSR && !SSR && !MSR) return -1;
@@ -123,9 +108,11 @@ int main() {
 
 		log("setDisplayMode", LC4500::DLPC350::setDisplayMode(DLPC350::DisplayMode::PATTERN));
 		log("setLEDCurrent", LC4500::DLPC350::setLEDCurrent(255, 255, 255));
-		log("getPatternDisplayMode", as_integer(*LC4500::DLPC350::getPatternDisplayMode()));
+		auto a = LC4500::DLPC350::getPatternDisplayMode();
+		log("getPatternDisplayMode", as_integer(*a));
 		log("setPatternDisplayMode", LC4500::DLPC350::setPatternDisplayMode(DLPC350::PatternDisplayMode::INTERNAL));
-		log("getPatternDisplayMode", as_integer(*LC4500::DLPC350::getPatternDisplayMode()));
+		auto b = LC4500::DLPC350::getPatternDisplayMode();
+		log("getPatternDisplayMode", as_integer(*b));
 		log("setPatternPeriod", LC4500::DLPC350::setPatternPeriod(2700, 3000));
 		log("setPatternTriggerMode", LC4500::DLPC350::setPatternTriggerMode(DLPC350::PatternTriggerMode::MODE1));
 
@@ -184,41 +171,6 @@ int main() {
 		int t;
 		cin >> t;
 		LC4500::DLPC350::setPatternSequenceStatus(DLPC350::PatternSequenceStatus::STOP);
-
-		//cout << "Video Mode" << endl;
-		//LC4500::DLPC350::setDisplayMode(DLPC350::DisplayMode::VIDEO);
-		//cin >> t;
-		//cout << "Set LED Enable" << endl;
-		//LC4500::DLPC350::setLEDEnable(LightCrafter::DLPC350::LEDEnableMode::AUTO, true, true, true);
-		//cin >> t;
-		//cout << "Set LED 255, 0, 0" << endl;
-		//LC4500::DLPC350::setLEDCurrent(255, 0, 0);
-		//cin >> t;
-		//cout << "Set LED 0, 255, 0" << endl;
-		//LC4500::DLPC350::setLEDCurrent(0, 255, 0);
-		//cin >> t;
-		//cout << "Set LED 0, 0, 255" << endl;
-		//LC4500::DLPC350::setLEDCurrent(0, 0, 255);
-		//cin >> t;
-		//cout << "Set LED 255, 255, 255" << endl;
-		//LC4500::DLPC350::setLEDCurrent(255, 255, 255);
-		//cin >> t;
-		//cout << "Set Input source as Test Pattern" << endl;
-		//LC4500::DLPC350::setInputSource(DLPC350::InputType::TEST_PATTERN);
-		//cin >> t;
-		//for (int i = 0; i <= 10; i++) {
-		//	cout << "Set Input as Test Pattern " << i << endl;
-		//	LC4500::DLPC350::setTestPattern(static_cast<DLPC350::TestPattern>(i));
-		//	cin >> t;
-		//}
-		//cout << "Set Input source as Flash Image" << endl;
-		//LC4500::DLPC350::setInputSource(DLPC350::InputType::FLASH);
-		//cin >> t;
-		//for (uint8_t i = 0; i < *LC4500::DLPC350::getNumImagesInFlash(); i++) {
-		//	cout << "Set Input as Flash Image " << static_cast<uint16_t>(i) << endl;
-		//	LC4500::DLPC350::setFlashImage(i);
-		//	cin >> t;
-		//}
 	}
 	cout << "Disconnect" << endl;
 	USB::close();

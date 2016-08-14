@@ -2,44 +2,44 @@
 
 namespace LC4500 {
 	namespace USB {
-		namespace {
-			inline bool isConnected() { return (Internal::device != nullptr); }
+		hid_device* device = nullptr;
 
-			inline bool initialize() { return (hid_init() == 0); }
+		inline bool isConnected() { return (device != nullptr); }
 
-			inline bool exit() { return (hid_exit() == 0); }
+		inline bool initialize() { return (hid_init() == 0); }
 
-			inline bool open() { return ((Internal::device = hid_open(Internal::vendorId, Internal::productId, nullptr)) != nullptr); }
+		inline bool exit() { return (hid_exit() == 0); }
 
-			inline bool close() { hid_close(Internal::device); Internal::device = nullptr; return true; }
+		inline bool open() { return ((device = hid_open(vendorId, productId, nullptr)) != nullptr); }
 
-			inline Buffer read() {
-				if (!isConnected()) return nullptr;
+		inline bool close() { hid_close(device); device = nullptr; return true; }
 
-				Buffer ret(new uint8_t[bufferSize]);
-				int32_t readBytes = hid_read_timeout(Internal::device, ret.get(), bufferSize, Internal::readTimeout);
+		inline Buffer read() {
+			if (!isConnected()) return nullptr;
 
-				if (readBytes == -1) {
-					close();
-					return nullptr;
-				}
+			Buffer ret(new uint8_t[bufferSize]);
+			int32_t readBytes = hid_read_timeout(device, ret.get(), bufferSize, readTimeout);
 
-				return ret;
+			if (readBytes == -1) {
+				close();
+				return nullptr;
 			}
 
-			inline int32_t write(Buffer &data) {
-				if (!isConnected()) return -1;
+			return ret;
+		}
 
-				int32_t writtenBytes = hid_write(Internal::device, data.get(), bufferSize);
+		inline int32_t write(Buffer &data) {
+			if (!isConnected()) return -1;
 
-				if (writtenBytes == -1) {
-					close();
-					return -1;
-				}
+			int32_t writtenBytes = hid_write(device, data.get(), bufferSize);
 
-				return writtenBytes;
+			if (writtenBytes == -1) {
+				close();
+				return -1;
 			}
-		};
+
+			return writtenBytes;
+		}
 	};
 };
 

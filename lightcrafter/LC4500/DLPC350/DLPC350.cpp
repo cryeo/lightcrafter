@@ -97,8 +97,8 @@ namespace LC4500 {
 				}
 			}
 
-			if (*displayMode != mode) {
-				auto result = transactForSetValues(0x1A1B, mode);
+			if (*displayMode != mode) {				
+				auto result = transactForSetValues<uint8_t>(0x1A1B, static_cast<uint8_t>(mode));
 				return (result != nullptr);
 			}
 
@@ -119,7 +119,7 @@ namespace LC4500 {
 		* CMD2 : 0x1A, CMD3 : 0x22, Param : 1
 		*/
 		bool setPatternDisplayMode(PatternDisplayMode mode) {
-			auto result = transactForSetValues(0x1A22, mode);
+			auto result = transactForSetValues<uint8_t>(0x1A22, static_cast<uint8_t>(mode));
 			return (result != nullptr);
 		}
 
@@ -137,7 +137,7 @@ namespace LC4500 {
 		* CMD2 : 0x1A, CMD3 : 0x23, Param : 1
 		*/
 		bool setPatternTriggerMode(PatternTriggerMode mode) {
-			auto result = transactForSetValues(0x1A23, mode);
+			auto result = transactForSetValues<uint8_t>(0x1A23, static_cast<uint8_t>(mode));
 			return (result != nullptr);
 		}
 
@@ -155,7 +155,7 @@ namespace LC4500 {
 		* CMD2 : 0x1A, CMD3 : 0x23, Param : 1
 		*/
 		bool setPatternSequenceStatus(PatternSequenceStatus mode) {
-			auto result = transactForSetValues(0x1A24, mode);
+			auto result = transactForSetValues<uint8_t>(0x1A24, static_cast<uint8_t>(mode));
 			return (result != nullptr);
 		}
 
@@ -174,7 +174,7 @@ namespace LC4500 {
 		* CMD2 : 0x1A, CMD3 : 0x07, Param : 1
 		*/
 		bool setLEDEnable(LEDEnableMode mode, bool redEnabled, bool greenEnabled, bool blueEnabled) {
-			auto result = transactForSetValues(0x1A07, LEDEnable(mode, redEnabled, greenEnabled, blueEnabled).value);
+			auto result = transactForSetValues<uint8_t>(0x1A07, LEDEnable(mode, redEnabled, greenEnabled, blueEnabled).value);
 			return (result != nullptr);
 		}
 
@@ -193,7 +193,7 @@ namespace LC4500 {
 		* CMD2 : 0x0B, CMD3 : 0x01, Param : 3
 		*/
 		bool setLEDCurrent(uint8_t red, uint8_t green, uint8_t blue) {
-			auto result = transactForSetValues(0x0B01, 255 - red, 255 - green, 255 - blue);
+			auto result = transactForSetValues<uint8_t, uint8_t, uint8_t>(0x0B01, 255 - red, 255 - green,	255 - blue);
 			return (result != nullptr);
 		}
 
@@ -211,7 +211,7 @@ namespace LC4500 {
 		* CMD2 : 0x1A, CMD3 : 0x00, Param : 1
 		*/
 		bool setInputSource(InputType type, InputBitDepth bitDepth) {
-			auto result = transactForSetValues(0x1A00, InputSource(type, bitDepth).value);
+			auto result = transactForSetValues<uint8_t>(0x1A00, InputSource(type, bitDepth).value);
 			return (result != nullptr);
 		}
 
@@ -231,7 +231,7 @@ namespace LC4500 {
 		*/
 		bool setTestPattern(TestPattern pattern) {
 			assert(getInputSource()->type == InputType::TEST_PATTERN);
-			auto result = transactForSetValues(0x1203, pattern);
+			auto result = transactForSetValues<uint8_t>(0x1203, static_cast<uint8_t>(pattern));
 			return (result != nullptr);
 		}
 
@@ -252,7 +252,8 @@ namespace LC4500 {
 		bool setFlashImage(uint8_t index) {
 			assert(getInputSource()->type == InputType::FLASH);
 			assert(0 <= index && index < *getNumImagesInFlash());
-			auto result = transactForSetValues(0x1A39, index);
+
+			auto result = transactForSetValues<uint8_t>(0x1A39, std::forward<uint8_t>(index));
 			return (result != nullptr);
 		}
 
@@ -273,7 +274,7 @@ namespace LC4500 {
 			assert(exposure <= frame);
 			assert(frame - exposure > 230);
 
-			auto result = transactForSetValues(0x1A29, exposure, frame);
+			auto result = transactForSetValues<uint32_t, uint32_t>(0x1A29, std::forward<uint32_t>(exposure), std::forward<uint32_t>(frame));
 			uint8_t *ptr = result.get();
 			return (ptr != nullptr);
 		}
@@ -332,11 +333,11 @@ namespace LC4500 {
 			if (repeat) {
 				triggerOut2PulsePerPattern = static_cast<uint8_t>(patternSequence.sizePattern());
 			}
-			auto result = transactForSetValues(0x1A31,
-				patternSequence.sizePattern() - 1,
-				repeat,
-				triggerOut2PulsePerPattern - 1,
-				patternSequence.sizeImage() - 1);
+			auto result = transactForSetValues<uint8_t, uint8_t, uint8_t, uint8_t>(0x1A31,
+				static_cast<uint8_t>(patternSequence.sizePattern() - 1),
+				static_cast<uint8_t>(repeat),
+				static_cast<uint8_t>(triggerOut2PulsePerPattern - 1),
+				static_cast<uint8_t>(patternSequence.sizeImage() - 1));
 			return (result != nullptr);
 		}
 
@@ -403,9 +404,9 @@ namespace LC4500 {
 		* validatePatternSequence
 		* CMD2 : 0x1A, CMD3 : 0x1A
 		*/
-		std::unique_ptr<Validation> validatePatternSequence() {
-			auto result = transactForGetValues<Validation>(0x1A1A);
-			return std::unique_ptr<Validation>(new Validation(*result.get()));
+		std::unique_ptr<PatternSequenceValidation> validatePatternSequence() {
+			auto result = transactForGetValues<PatternSequenceValidation>(0x1A1A);
+			return std::unique_ptr<PatternSequenceValidation>(new PatternSequenceValidation(*result.get()));
 		}
 
 		/**
@@ -413,7 +414,7 @@ namespace LC4500 {
 		* CMD2 : 0x1A, CMD3 : 0x33
 		*/
 		bool openMailbox(uint8_t index) {
-			auto result = transactForSetValues(0x1A33, index);
+			auto result = transactForSetValues<uint8_t>(0x1A33, std::forward<uint8_t>(index));
 			return (result != nullptr);
 		}
 
@@ -433,7 +434,7 @@ namespace LC4500 {
 		bool setAddressInMailbox(uint8_t address) {
 			assert(address <= 127);
 
-			auto result = transactForSetValues(0x1A32, address);
+			auto result = transactForSetValues<uint8_t>(0x1A32, std::forward<uint8_t>(address));
 			return (result != nullptr);
 		}
 	};

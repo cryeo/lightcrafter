@@ -16,10 +16,11 @@ namespace LC4500 {
 
 		struct Transaction {
 			enum class Type : bool { WRITE = 0, READ = 1 };
-			Transaction() : flags{ 0 }, sequence{ 0 }, length{ 0 }, data{ 0 } {}
+			Transaction() : flags{ 0, 0, 0, 1, 0 }, sequence{ 0 }, length{ 0 }, data{ 0 } {}
 
 			template<typename... ParamList>
-			Transaction(Type _type, uint16_t cmd, ParamList&&... params) : flags{ 0, 0, 0, 0, _type }, sequence{ 0 }, length{ 2 }, command{ cmd } {
+			Transaction(Type _type, uint16_t cmd, ParamList&&... params) : flags{ 0, 0, 0, 1, _type }, sequence{ 0 }, length{ 2 }, data{ 0 } {
+				command = cmd;
 				if (sizeof...(params) > 0) {
 					addData(std::forward<ParamList>(params)...);
 				}
@@ -77,7 +78,8 @@ namespace LC4500 {
 			uint16_t writtenBytes = std::min(tran.length, maxDataSize);
 
 			USB::Buffer buffer(new uint8_t[USB::bufferSize]);
-			memcpy(buffer.get() + 1, &tran, sizeof(uint8_t) * writtenBytes);
+			memset(buffer.get(), 0, sizeof(uint8_t) * USB::bufferSize);
+			memcpy(buffer.get() + 1, &tran, sizeof(uint8_t) * (headerBytes + writtenBytes));
 			if (USB::write(buffer) == -1) return -1;
 
 			totalWrittenBytes += writtenBytes;
@@ -85,16 +87,17 @@ namespace LC4500 {
 			while (totalWrittenBytes < tran.length) {
 				writtenBytes = std::min(static_cast<uint16_t>(USB::maxPacketSize), static_cast<uint16_t>(tran.length - totalWrittenBytes));
 				memcpy(buffer.get() + 1, &tran.data[totalWrittenBytes], sizeof(uint8_t) * writtenBytes);
+				if (USB::write(buffer) == -1) return -1;
 				totalWrittenBytes += writtenBytes;
 			}
 
 			return totalWrittenBytes + headerBytes;
 		}
 
-		template<class T>
+		template<typename T>
 		using TransactionData = std::unique_ptr<T, std::default_delete<T[]>>;
 
-		template<class T = uint8_t>
+		template<typename T = uint8_t>
 		extern TransactionData<T> transact(Transaction &tran) {
 			int32_t result = write(tran);
 
@@ -117,16 +120,16 @@ namespace LC4500 {
 			}
 		}
 
-		template<class T = uint8_t>
+		template<typename T = uint8_t>
 		extern inline TransactionData<T> transactForGetValues(uint16_t cmd) {
 			auto send = Transaction(Transaction::Type::READ, cmd);
 			return transact<T>(send);
 		}
 
-		template<class T = uint8_t, typename... ParamList>
-		extern inline TransactionData<T> transactForSetValues(uint16_t cmd, ParamList&&... params) {
+		template<typename... ParamList>
+		extern inline TransactionData<uint8_t> transactForSetValues(uint16_t cmd, ParamList&&... params) {
 			auto send = Transaction(Transaction::Type::WRITE, cmd, std::forward<ParamList>(params)...);
-			return transact<T>(send);
+			return transact<uint8_t>(send);
 		}
 	};
 };
