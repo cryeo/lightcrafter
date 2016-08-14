@@ -5,10 +5,9 @@
 
 #include "LC4500/LC4500.hpp"
 
-using namespace std;
 using namespace LC4500;
 
-void showStatus(unique_ptr<DLPC350::HardwareStatus> &HSR, unique_ptr<DLPC350::SystemStatus> &SSR, unique_ptr<DLPC350::MainStatus> &MSR) {
+void showStatus(std::unique_ptr<DLPC350::HardwareStatus> &HSR, std::unique_ptr<DLPC350::SystemStatus> &SSR, std::unique_ptr<DLPC350::MainStatus> &MSR) {
 	using namespace LC4500::Error;
 
 	printf("* Status\n");
@@ -27,7 +26,7 @@ void showStatus(unique_ptr<DLPC350::HardwareStatus> &HSR, unique_ptr<DLPC350::Sy
 	printf("*** Gamma Correction Function Enable : %s\n", MSR::gammaCorrection[static_cast<int>(MSR->gammaCorrection)].c_str());
 }
 
-void showVersion(unique_ptr<DLPC350::Version> &version) {
+void showVersion(std::unique_ptr<DLPC350::Version> &version) {
 	printf("* Version\n");
 	printf("** Application Software Revision : %d.%d.%d\n", version->app.major, version->app.minor, version->app.patch);
 	printf("** API Software Revision : %d.%d.%d\n", version->api.major, version->api.minor, version->api.patch);
@@ -36,7 +35,7 @@ void showVersion(unique_ptr<DLPC350::Version> &version) {
 }
 
 template <typename Enumeration>
-auto as_integer(Enumeration const value) { return static_cast<int>(value); }
+inline int as_integer(Enumeration const value) { return static_cast<int>(value); }
 
 namespace Logger {
 	template<typename T>
@@ -48,16 +47,16 @@ namespace Logger {
 	inline void log(T t, Args&&... args) {
 		log(t);
 		log(std::forward<Args>(args)...);
-		cout << endl;
+		std::cout << std::endl;
 	}
 };
 
 int main() {
 	USB::initialize();
 
-	cout << "Try to connect" << endl;
+	std::cout << "Try to connect" << std::endl;
 	if (USB::open()) {
-		cout << "Connected" << endl;
+		std::cout << "Connected" << std::endl;
 
  		auto HSR = LC4500::DLPC350::getHardwareStatus();
 		auto SSR = LC4500::DLPC350::getSystemStatus();
@@ -71,50 +70,50 @@ int main() {
 
 		auto tag = LC4500::DLPC350::getFirmwareTag();
 		if (!tag) return -1;
-		cout << *tag << endl;
+		std::cout << "* Firmware tag : " << *tag << std::endl;
 
 		auto numImages = LC4500::DLPC350::getNumImagesInFlash();
 		if (!numImages) return -1;
-		cout << static_cast<uint16_t>(*numImages) << endl;
+		std::cout << "* The number of images in flash memory : " << as_integer(*numImages) << std::endl;
 
 		auto displayMode = LC4500::DLPC350::getDisplayMode();
 		auto powerMode = LC4500::DLPC350::getPowerMode();
 
-		if (displayMode && *powerMode == DLPC350::PowerMode::NORMAL) { // Normal mode
-			if (*displayMode == DLPC350::DisplayMode::PATTERN) { // Pattern Sequence Mode
-				auto patternTriggerMode = LC4500::DLPC350::getPatternTriggerMode();
-				auto patternDisplayMode = LC4500::DLPC350::getPatternDisplayMode();
+		//if (displayMode && *powerMode == DLPC350::PowerMode::NORMAL) { // Normal mode
+		//	if (*displayMode == DLPC350::DisplayMode::PATTERN) { // Pattern Sequence Mode
+		//		auto patternTriggerMode = LC4500::DLPC350::getPatternTriggerMode();
+		//		auto patternDisplayMode = LC4500::DLPC350::getPatternDisplayMode();
 
-				if (*patternDisplayMode == DLPC350::PatternDisplayMode::EXTERNAL) {
-				}
-				else {
-				}
+		//		if (*patternDisplayMode == DLPC350::PatternDisplayMode::EXTERNAL) {
+		//		}
+		//		else {
+		//		}
 
-				if (*patternTriggerMode == DLPC350::PatternTriggerMode::MODE0 ||
-					*patternTriggerMode == DLPC350::PatternTriggerMode::MODE1 ||
-					*patternTriggerMode == DLPC350::PatternTriggerMode::MODE2) { // Pattern sequence mode
-				}
-				else { // Pattern sequence mode with variable exposure display sequence
-				}
+		//		if (*patternTriggerMode == DLPC350::PatternTriggerMode::MODE0 ||
+		//			*patternTriggerMode == DLPC350::PatternTriggerMode::MODE1 ||
+		//			*patternTriggerMode == DLPC350::PatternTriggerMode::MODE2) { // Pattern sequence mode
+		//		}
+		//		else { // Pattern sequence mode with variable exposure display sequence
+		//		}
 
-			}
-			else { // Video mode
-			}
-		}
-		else { // Standby mode
-		}
+		//	}
+		//	else { // Video mode
+		//	}
+		//}
+		//else { // Standby mode
+		//}
 
 		using namespace Logger;
 
-		log("setDisplayMode", LC4500::DLPC350::setDisplayMode(DLPC350::DisplayMode::PATTERN));
-		log("setLEDCurrent", LC4500::DLPC350::setLEDCurrent(255, 255, 255));
+		Logger::log("setDisplayMode", LC4500::DLPC350::setDisplayMode(DLPC350::DisplayMode::PATTERN));
+		Logger::log("setLEDCurrent", LC4500::DLPC350::setLEDCurrent(255, 255, 255));
 		auto a = LC4500::DLPC350::getPatternDisplayMode();
-		log("getPatternDisplayMode", as_integer(*a));
-		log("setPatternDisplayMode", LC4500::DLPC350::setPatternDisplayMode(DLPC350::PatternDisplayMode::INTERNAL));
+		Logger::log("getPatternDisplayMode", as_integer(*a));
+		Logger::log("setPatternDisplayMode", LC4500::DLPC350::setPatternDisplayMode(DLPC350::PatternDisplayMode::INTERNAL));
 		auto b = LC4500::DLPC350::getPatternDisplayMode();
-		log("getPatternDisplayMode", as_integer(*b));
-		log("setPatternPeriod", LC4500::DLPC350::setPatternPeriod(2700, 3000));
-		log("setPatternTriggerMode", LC4500::DLPC350::setPatternTriggerMode(DLPC350::PatternTriggerMode::MODE1));
+		Logger::log("getPatternDisplayMode", as_integer(*b));
+		Logger::log("setPatternPeriod", LC4500::DLPC350::setPatternPeriod(2700, 3000));
+		Logger::log("setPatternTriggerMode", LC4500::DLPC350::setPatternTriggerMode(DLPC350::PatternTriggerMode::MODE1));
 
 		using Bit = Pattern::BitIndex;
 		PatternSequence ps;
@@ -157,22 +156,24 @@ int main() {
 		ps.addPattern(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 3, Bit::B1);
 		ps.addPattern(Pattern::Color::WHITE, Pattern::TriggerType::EXTERNAL_POSITIVE, 1, 3, Bit::B2);
 
-		log("configurePatternSequence", LC4500::DLPC350::configurePatternSequence(ps));
-		log("sendPatternDisplayLUT", LC4500::DLPC350::sendPatternDisplayLUT(ps));
-		log("sendPatternImageLUT", LC4500::DLPC350::sendPatternImageLUT(ps));
+		Logger::log("configurePatternSequence", LC4500::DLPC350::configurePatternSequence(ps));
+		Logger::log("sendPatternDisplayLUT", LC4500::DLPC350::sendPatternDisplayLUT(ps));
+		Logger::log("sendPatternImageLUT", LC4500::DLPC350::sendPatternImageLUT(ps));
 
-		log("validatePatternSequence", LC4500::DLPC350::validatePatternSequence()->isValid());
+		Logger::log("validatePatternSequence", LC4500::DLPC350::validatePatternSequence()->isValid());
 		LC4500::DLPC350::setPatternSequenceStatus(DLPC350::PatternSequenceStatus::STOP);
 		while (true) {
 			LC4500::DLPC350::setPatternSequenceStatus(DLPC350::PatternSequenceStatus::START);
 			if (*LC4500::DLPC350::getPatternSequenceStatus() == DLPC350::PatternSequenceStatus::START) break;
 		}
-		cout << "Started" << endl;
-		int t;
-		cin >> t;
+		std::cout << "Pattern sequence started" << std::endl;
+
 		LC4500::DLPC350::setPatternSequenceStatus(DLPC350::PatternSequenceStatus::STOP);
+		std::cout << "Pattern sequence stoped" << std::endl;
 	}
-	cout << "Disconnect" << endl;
+
+	std::cout << "Disconnect" << std::endl;
+
 	USB::close();
 	USB::exit();
 
